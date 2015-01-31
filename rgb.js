@@ -6,7 +6,7 @@
 	
 	//iterates timer
 	window.setInterval(function(){
-		//do functions
+		// do functions
 	   	var choice = Math.floor(Math.random() * 4)+1;
 	   	var rgb= [];
 	   	switch(choice) {
@@ -31,8 +31,8 @@
 		red_list.style.opacity = rgb[0];
 		blue_list.style.opacity = rgb[1];
 		green_list.style.opacity = rgb[2];
-	   	console.log(rgb);
-		fadeColors(1,0,interval);
+	 	console.log(rgb);
+
 	}, interval);
 
 //sequence functions
