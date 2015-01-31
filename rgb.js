@@ -1,30 +1,32 @@
 	//acquire interval from Justin
-
-
+	interval = 50;
 	
-	interval = 100;
-	
+
+	var red_test = 0;
+	var blue_test = 0;
+	var green_test = 0;
 	//iterates timer
 	window.setInterval(function(){
-		// do functions
+		//do functions
 	   	var choice = Math.floor(Math.random() * 4)+1;
 	   	var rgb= [];
-	   	switch(choice) {
-		    case 1:
-				rgb = intervalRGB();
-		        break;
-		    case 2:
-		        rgb = randomRGB();
-		        break;
-		    case 3:
-		    	rgb = twoOnRGB(1,0,0);
-		    	break;
-		    case 4:
-		    	rgb = twoOnRGB(0,1,0);
-		    	break;
-		    default:
+	 //   	switch(choice) {
+		//     case 1:
+		// 		rgb = intervalRGB();
+		//         break;
+		//     case 2:
+		//         rgb = randomRGB();
+		//         break;
+		//     case 3:
+		//     	rgb = twoOnRGB(1,0,0);
+		//     	break;
+		//     case 4:
+		//     	rgb = twoOnRGB(0,1,0);
+		//     	break;
+		//     default:
 		        
-		}
+		// }
+		rgb = [fadeColors(0,0,0),1,1];
 		var red_list = document.getElementById("red");
 		var blue_list = document.getElementById("blue");
 		var green_list = document.getElementById("green");
@@ -32,7 +34,6 @@
 		blue_list.style.opacity = rgb[1];
 		green_list.style.opacity = rgb[2];
 	 	console.log(rgb);
-
 	}, interval);
 
 //sequence functions
@@ -45,8 +46,10 @@
 	function fadeColors(currentColour,otherColour,dtime){
 		var fadeduration = 1;
 		var pi = Math.PI;
-
-		console.log();
+		var x = 1/(10*pi);
+		console.log(Math.abs(Math.cos(red_test)));
+		red_test += x;
+		return Math.abs(Math.cos(red_test));
 	}
 
 
