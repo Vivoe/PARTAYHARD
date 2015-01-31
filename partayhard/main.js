@@ -21,20 +21,57 @@ Article: https://software.intel.com/en-us/html5/articles/intel-xdk-iot-edition-n
 
 var mraa = require("mraa"); //require mraa
 //Initialize PWM on Digital Pin #3 (D3) and enable the pwm pin
-var pwm3 = new mraa.Pwm(3, -1, false);
-pwm3.enable(true);
+var pwm = new mraa.Pwm(9, -1, false);
+pwm.enable(true);
 
 //set the period in microseconds.
-pwm3.period_us(2000);
+pwm.period_us(2000);
 var value = 0.0;
 
-setInterval(function () {
-    if (value >= 1.0) {
-        value = 0.0;
+var upmMicrophone = require("jsupm_mic");
+var mic = new upmMicrophone.Microphone(0);
+
+
+
+var threshContext = new upmMicrophone.thresholdContext;
+threshContext.averageReading = 0;
+threshContext.runningAverage = 0;
+threshContext.averagedOver = 2;
+
+var is_running = false;
+
+//Array of the most recent n samples
+var maxThresh = 0;
+
+var pastThresh = [];
+var index = 0;
+var threshPersistance = 30;
+
+for (var i = 0; i < threshPersistance; i++){
+    pastThresh[i] = 0;
+}
+
+//Gets the max value in the most recent n samples
+function manageThresh(thresh){
+    pastThresh[index] = thresh;
+    index = (index + 1) % threshPersistance;
+    
+    maxThresh = Math.max.apply(Math, pastThresh);
+    console.log(maxThresh);
+}
+
+setInterval(function () {    
+    var buffer = new upmMicrophone.uint16Array(5);
+    var len = mic.getSampledWindow(1, 5, buffer);
+    if (len){
+        var thresh = mic.findThreshold(threshContext, 1, buffer, len);
+        mic.printGraph(threshContext);
+        
+        manageThresh(thresh);
+        
+        pwm.write(Math.max(0, (thresh/maxThresh)/5-0.05));
+        console.log(pwm.read());
+        
     }
     
-    value = value + 0.03;
-    pwm3.write(value); //Write duty cycle value. 
-
-    console.log(pwm3.read());//read current value that is set before.
-}, 3000);
+}, 20);
