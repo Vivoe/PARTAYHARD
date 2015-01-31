@@ -1,0 +1,20 @@
+			#red{
+			background-color: red;
+			width: 30%;
+			height: 30%;
+			display: inline-block;
+			}
+
+			#green{
+			background-color: green;
+			width: 30%;
+			height: 30%;
+			display: inline-block;
+			}
+
+			#blue {
+			background-color: blue;
+			width: 30%;
+			height: 30%;
+			display: inline-block;
+			}
