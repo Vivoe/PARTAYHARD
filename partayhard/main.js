@@ -24,19 +24,33 @@ var mraa = require("mraa"); //require mraa
 var pwm = new mraa.Pwm(9, -1, false);
 pwm.enable(true);
 
+ var pwm1 = new mraa.Pwm(5, -1, false);
+pwm1.enable(true);
+
+var pwm2 = new mraa.Pwm(3, -1, false);
+pwm2.enable(true);
+
+
 //set the period in microseconds.
 pwm.period_us(2000);
+
+pwm1.period_us(2000);
+pwm2.period_us(2000);
+
 var value = 0.0;
+
+
 
 var upmMicrophone = require("jsupm_mic");
 var mic = new upmMicrophone.Microphone(0);
-
-
 
 var threshContext = new upmMicrophone.thresholdContext;
 threshContext.averageReading = 0;
 threshContext.runningAverage = 0;
 threshContext.averagedOver = 2;
+
+var onboard = new mraa.Gpio(13);
+onboard.dir(mraa.DIR_OUT);
 
 var is_running = false;
 
@@ -45,7 +59,7 @@ var maxThresh = 0;
 
 var pastThresh = [];
 var index = 0;
-var threshPersistance = 30;
+var threshPersistance = 10;
 
 for (var i = 0; i < threshPersistance; i++){
     pastThresh[i] = 0;
@@ -55,23 +69,35 @@ for (var i = 0; i < threshPersistance; i++){
 function manageThresh(thresh){
     pastThresh[index] = thresh;
     index = (index + 1) % threshPersistance;
-    
     maxThresh = Math.max.apply(Math, pastThresh);
-    console.log(maxThresh);
 }
 
 setInterval(function () {    
-    var buffer = new upmMicrophone.uint16Array(5);
-    var len = mic.getSampledWindow(1, 5, buffer);
+    var buffer = new upmMicrophone.uint16Array(2);
+    
+    var len = mic.getSampledWindow(1, 2, buffer);
+    
+    //pwm1.write(0.1);
+    //pwm2.write(0.5);
+    
     if (len){
         var thresh = mic.findThreshold(threshContext, 1, buffer, len);
-        mic.printGraph(threshContext);
         
         manageThresh(thresh);
         
-        pwm.write(Math.max(0, (thresh/maxThresh)/5-0.05));
-        console.log(pwm.read());
+        //pwm.write(Math.max(0, (thresh/maxThresh)/7-0.05));
+        pwm.write((Math.max(0, (thresh/maxThresh))));
+        pwm1.write((Math.max(0, (thresh/maxThresh)/7)));
+        pwm2.write((Math.max(0, (thresh/maxThresh)/7)));
+//        pwm.write(0.8);
+        console.log(pwm2.read());
+        
+        if (thresh >= maxThresh * 0.9){
+            onboard.write(1);
+        } else {
+            onboard.write(0);
+        }
         
     }
     
-}, 20);
+}, 16);
