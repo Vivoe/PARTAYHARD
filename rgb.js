@@ -41,6 +41,12 @@
 
 	}, interval);
 
+	// ***************** returns literally RANDOM float rounded to 2 demicals
+	// function randomRGB(){
+	// 	return [Math.random(),Math.random(),Math.random()];
+	// }
+	// ***************** returns literally RANDOM float rounded to 2 demicals
+
 	// ***************** using sin to generate pattern
 	// function fadeColorR(){
 	// 	var pi = Math.PI;
@@ -64,7 +70,6 @@
 	// 	console.log(Math.abs(Math.sin(green_test+2/3*pi)));
 	// 	green_test += x;
 	// 	return Math.abs(Math.sin(green_test+2/3*pi));
-
 	// }
 	// ***************** using sin to generate pattern
 
@@ -177,10 +182,6 @@
 
 	// 	}, interval
 	// );
-	//returns literally RANDOM float rounded to 2 demicals
-	// function randomRGB(){
-	// 	return [Math.random(),Math.random(),Math.random()];
-	// }
 
 	//two off, 1 on..
 	// var red=0;
