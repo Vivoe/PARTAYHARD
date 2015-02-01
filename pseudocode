@@ -1,0 +1,41 @@
+
+var redtime = 0;
+
+function red ()
+{
+	intensity=+0.1;
+	if intensity>1 {
+	intensity = 0;
+	};
+	redtime += 1;
+	when (time == redtime ) {
+	lightintensity = intensity;
+	}
+}
+
+var greentime = 1;
+
+function green () {
+	intensity+=0.1;
+	if intensity>1 {
+	intensity = 0;
+	};
+	redtime += 1;
+	when (time == redtime ) {
+	lightintensity = intensity;
+	}
+}
+
+var greentime = 2;
+
+function green () {
+	intensity+=0.1;
+	if intensity>1 {
+	intensity = 0;
+	};
+	redtime += 1;
+	when (time == redtime ) {
+	lightintensity = intensity;
+	}
+}
+
