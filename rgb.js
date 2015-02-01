@@ -23,12 +23,14 @@
 		//     	break;
 		//     case 4:
 		//     	rgb = twoOnRGB(0,1,0);
+		//     case 5: 
+		//       rgb = [fadeColorR(), fadeColorB(),fadeColorG()];
 		//     	break;
 		//     default:
 		        
 		// }
 		// Display the color
-		rgb = [fadeColorR(), fadeColorB(),fadeColorG()];
+		rgb = [pattern2R(), pattern2B(), pattern2G()];
 		var red_list = document.getElementById("red");
 		var blue_list = document.getElementById("blue");
 		var green_list = document.getElementById("green");
@@ -39,50 +41,87 @@
 
 	}, interval);
 
-//sequence functions
-	//Use trig functions to fade two colours in
-	//function(currentColour, otherColour, dtime);
-	//var fadeduration = 1 sec;
-	//scale 1 sec to pi = x
-	//sin/cos(x * dtime);
-
-	// function fadeColors(shift){
-	// 	var A = 5;
-	// 	console.log(Math.abs(interval*Math.cos(red_test))+shift);
-	// 	return Math.abs(Math.cos(red_test))+shift;
-	// 	red
+	// ***************** using sin to generate pattern
+	// function fadeColorR(){
+	// 	var pi = Math.PI;
+	// 	var x = 1/10;
+	// 	console.log(Math.abs(Math.sin(red_test)));
+	// 	red_test += x;
+	// 	return Math.abs(Math.sin(red_test));
 	// }
 
-	// using sin to generate pattern
-	function fadeColorR(){
-		var pi = Math.PI;
-		var x = 1/10;
-		console.log(Math.abs(Math.sin(red_test)));
-		red_test += x;
-		return Math.abs(Math.sin(red_test));
+	// function fadeColorB() {
+	// 	var pi = Math.PI;
+	// 	var x = 1/10;
+	// 	console.log(Math.abs(Math.sin(blue_test+(1/3*pi))));
+	// 	blue_test += x;
+	// 	return Math.abs(Math.sin(blue_test+(1/3*pi)));
+	// }
+
+	// function fadeColorG() {
+	// 	var pi = Math.PI;
+	// 	var x = 1/10;
+	// 	console.log(Math.abs(Math.sin(green_test+2/3*pi)));
+	// 	green_test += x;
+	// 	return Math.abs(Math.sin(green_test+2/3*pi));
+
+	// }
+	// ***************** using sin to generate pattern
+
+	// ***************** new sequence that has two LED color on at the same time
+	var counter1 = 0;
+
+	function pattern2R() {
+		counter1 += interval;
+		if (counter1 == interval) {
+			console.log("Rcondition1");
+			return 1;}
+		if (counter1 == interval*2) {
+			console.log("Rcondition2");
+			return 0;}
+		if (counter1 == interval*3) {
+			console.log("Rcondition3");
+			counter1 = 0;
+			return 1;}
 	}
 
-	function fadeColorB() {
-		var pi = Math.PI;
-		var x = 1/10;
-		console.log(Math.abs(Math.sin(blue_test+(1/2*pi))));
-		blue_test += x;
-		return Math.abs(Math.sin(blue_test+(1/2*pi)));
+	var counter2 = 0;
 
+	function pattern2B() {
+		
+		counter2 += interval;
+
+		if (counter2 == interval) {
+			console.log("Bcondition1");
+			return 1;}
+		if (counter2 == interval*2) {
+			console.log("Bcondition2");
+			return 1;}
+		if (counter2 == interval*3) {
+			console.log("Bcondition3");
+			counter2 = 0;
+			return 0;}
 	}
 
-	function fadeColorG() {
-		var pi = Math.PI;
-		var x = 1/10;
-		console.log(Math.abs(Math.sin(green_test+pi)));
-		green_test += x;
-		return Math.abs(Math.sin(green_test+pi));
+	var counter3 = 0;
 
+	function pattern2G() {
+		counter3 += interval;
+		if (counter3 == interval) {
+			console.log("Gcondition1");
+			return 0;}
+		if (counter3 == interval*2) {
+			console.log("Gcondition2");
+			return 1;}
+		if (counter3 == interval*3) {
+			console.log("Gcondition3");
+			counter3 = 0;
+			return 1;}
 	}
-	//using sin to generate pattern
+	// ***************** new sequence that has two LED color on at the same time
 
 
-	//basic interation sequence
+	// ***************** basic interation sequence
 	// var counter = 0;
 	// function intervalRGB(){
 	// 	counter += interval;
@@ -96,6 +135,26 @@
 	// 		counter=0;
 	// 		return [0,0,1];	
 	// 	}
+	// }
+	// ***************** basic interation sequence
+
+
+
+
+	//*************************** garbage *******************************
+
+	//sequence functions
+	//Use trig functions to fade two colours in
+	//function(currentColour, otherColour, dtime);
+	//var fadeduration = 1 sec;
+	//scale 1 sec to pi = x
+	//sin/cos(x * dtime);
+
+	// function fadeColors(shift){
+	// 	var A = 5;
+	// 	console.log(Math.abs(interval*Math.cos(red_test))+shift);
+	// 	return Math.abs(Math.cos(red_test))+shift;
+	// 	red
 	// }
 
 	// setInterval(
